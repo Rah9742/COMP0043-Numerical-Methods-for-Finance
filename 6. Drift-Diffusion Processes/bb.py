@@ -28,8 +28,8 @@ def run_and_plot():
     X, EX = compute_sde(a, b, dt, sigma, npaths, nsteps, T, t)
 
     plt.figure(1)
-    plt.plot(t, EX, linestyle='-.', color="b", marker='o', label='Expected path')
     plt.plot(t, X[0:-1, :])
+    plt.plot(t, EX, linestyle='-.', color="k", marker='x', markersize=2 , label='Expected path')
     plt.xlabel('x')
     plt.title('Paths of Brownian bridge dX = ((b-X)/(T-t))*dt + sigma*dW')
     plt.legend()

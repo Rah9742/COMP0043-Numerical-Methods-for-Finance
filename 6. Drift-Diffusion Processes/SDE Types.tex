@@ -1,0 +1,295 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{amsmath, amssymb}
+
+\title{SDE Modelling Cheat Sheet}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+%==========================================
+%   Arithmetic Brownian Motion (ABM)
+%==========================================
+
+\subsection*{Arithmetic Brownian Motion (ABM)}
+
+\paragraph{SDE}
+\[
+dX_t = \mu\,dt + \sigma\,dW_t.
+\]
+
+\paragraph{When to Use}
+\begin{itemize}
+    \item Modelling spreads or differences.
+    \item Short horizons where negative values are acceptable.
+    \item Simple linear mispricing dynamics.
+\end{itemize}
+
+\paragraph{Finance Interpretation}
+\begin{itemize}
+    \item Gaussian increments with constant volatility.
+    \item Can be negative, unsuitable for asset prices.
+\end{itemize}
+
+\paragraph{Typical Use Cases}
+\begin{itemize}
+    \item Pair trading spreads.
+    \item Commodity forward residuals.
+\end{itemize}
+
+\hrulefill
+
+%==========================================
+%   Brownian Bridge
+%==========================================
+
+\subsection*{Brownian Bridge}
+
+\paragraph{Definition}
+\[
+X_t \mid X_0, X_T \quad \text{with fixed } X_T.
+\]
+
+\paragraph{When to Use}
+\begin{itemize}
+    \item Simulation conditioned on an endpoint.
+    \item Variance reduction.
+\end{itemize}
+
+\paragraph{Finance Interpretation}
+\begin{itemize}
+    \item Conditional Brownian motion.
+    \item Variance shrinks as $t$ approaches $T$.
+\end{itemize}
+
+\paragraph{Typical Use Cases}
+\begin{itemize}
+    \item Barrier options.
+    \item Exposure modelling.
+\end{itemize}
+
+\hrulefill
+
+%==========================================
+%   CIR / Feller Square Root
+%==========================================
+
+\subsection*{CIR / Feller Square Root Process}
+
+\paragraph{SDE}
+\[
+dV_t = \kappa(\theta - V_t)\,dt + \sigma \sqrt{V_t}\,dW_t.
+\]
+
+\paragraph{When to Use}
+\begin{itemize}
+    \item Variable must remain positive.
+    \item Mean-reverting volatility or rates.
+\end{itemize}
+
+\paragraph{Finance Interpretation}
+\begin{itemize}
+    \item Skew and heavy tails from square-root term.
+    \item Feller condition ensures $V_t \ge 0$.
+\end{itemize}
+
+\paragraph{Typical Use Cases}
+\begin{itemize}
+    \item Heston variance.
+    \item Short rate modelling.
+\end{itemize}
+
+\hrulefill
+
+%==========================================
+%   GBM
+%==========================================
+
+\subsection*{Geometric Brownian Motion (GBM)}
+
+\paragraph{SDE}
+\[
+dS_t = \mu S_t\,dt + \sigma S_t\,dW_t.
+\]
+
+\paragraph{When to Use}
+\begin{itemize}
+    \item Prices must remain positive.
+    \item Proportional volatility.
+\end{itemize}
+
+\paragraph{Finance Interpretation}
+\begin{itemize}
+    \item Black--Scholes model.
+    \item Lognormal returns with constant volatility.
+\end{itemize}
+
+\paragraph{Typical Use Cases}
+\begin{itemize}
+    \item Baseline equity modelling.
+    \item Analytic option pricing.
+\end{itemize}
+
+\hrulefill
+
+%==========================================
+%   Heston Model
+%==========================================
+
+\subsection*{Heston Stochastic Volatility Model}
+
+\paragraph{System}
+\[
+dS_t = \mu S_t\,dt + \sqrt{V_t}\,S_t\,dW_t^{(1)},
+\quad
+dV_t = \kappa(\theta - V_t)\,dt + \sigma\sqrt{V_t}\,dW_t^{(2)}.
+\]
+
+\paragraph{When to Use}
+\begin{itemize}
+    \item Need stochastic, mean-reverting volatility.
+    \item Desire realistic smile and skew.
+\end{itemize}
+
+\paragraph{Finance Interpretation}
+\begin{itemize}
+    \item Captures volatility clustering.
+    \item Leverage effect allowed via correlation.
+\end{itemize}
+
+\paragraph{Typical Use Cases}
+\begin{itemize}
+    \item Equity and FX options.
+    \item Volatility derivatives.
+\end{itemize}
+
+\hrulefill
+
+%==========================================
+%   Ornstein-Uhlenbeck
+%==========================================
+
+\subsection*{Ornstein--Uhlenbeck (OU)}
+
+\paragraph{SDE}
+\[
+dX_t = \kappa(\theta - X_t)\,dt + \sigma dW_t.
+\]
+
+\paragraph{When to Use}
+\begin{itemize}
+    \item Mean-reverting variable that may be negative.
+    \item Gaussian linear dynamics.
+\end{itemize}
+
+\paragraph{Finance Interpretation}
+\begin{itemize}
+    \item Stationary distribution.
+    \item Not suitable for positive-only variables.
+\end{itemize}
+
+\paragraph{Typical Use Cases}
+\begin{itemize}
+    \item Pair trading.
+    \item Vasicek interest rate model.
+\end{itemize}
+
+\hrulefill
+
+%==========================================
+%   Mean-Reverting GBM (Log-OU)
+%==========================================
+
+\subsection*{Mean-Reverting GBM (Log-OU)}
+
+\paragraph{SDE}
+\[
+dS_t = \kappa(\theta - \ln S_t)\,S_t\,dt + \sigma S_t\,dW_t.
+\]
+
+\paragraph{When to Use}
+\begin{itemize}
+    \item Positive, mean-reverting prices.
+    \item Commodities or FX with fundamental levels.
+\end{itemize}
+
+\paragraph{Finance Interpretation}
+\begin{itemize}
+    \item Mean reversion in log space.
+    \item Suitable for commodity spot dynamics.
+\end{itemize}
+
+\paragraph{Typical Use Cases}
+\begin{itemize}
+    \item Energy markets.
+    \item FX equilibrium modelling.
+\end{itemize}
+
+\hrulefill
+
+%==========================================
+%   Variance Gamma
+%==========================================
+
+\subsection*{Variance Gamma (VG)}
+
+\paragraph{Definition}
+\[
+X_t = \theta G_t + \sigma W_{G_t},
+\qquad
+G_t \sim \text{Gamma process}.
+\]
+
+\paragraph{When to Use}
+\begin{itemize}
+    \item Need jumps, heavy tails, skew.
+    \item Short-horizon equity return realism.
+\end{itemize}
+
+\paragraph{Finance Interpretation}
+\begin{itemize}
+    \item Pure jump, infinite activity.
+    \item No instantaneous volatility.
+\end{itemize}
+
+\paragraph{Typical Use Cases}
+\begin{itemize}
+    \item Equity index modelling.
+    \item Option pricing with skew and kurtosis.
+\end{itemize}
+
+\hrulefill
+
+%==========================================
+%   Gamma Subordinator
+%==========================================
+
+\subsection*{Gamma Process}
+
+\paragraph{Definition}
+\[
+G_t \text{ is non-negative, increasing, pure jump}.
+\]
+
+\paragraph{When to Use}
+\begin{itemize}
+    \item Modelling cumulative activity.
+    \item Time-change processes.
+\end{itemize}
+
+\paragraph{Finance Interpretation}
+\begin{itemize}
+    \item Activity clock in Lévy models.
+    \item Operational loss accumulation.
+\end{itemize}
+
+\paragraph{Typical Use Cases}
+\begin{itemize}
+    \item Variance Gamma.
+    \item Operational risk.
+\end{itemize}
+
+\end{document}
