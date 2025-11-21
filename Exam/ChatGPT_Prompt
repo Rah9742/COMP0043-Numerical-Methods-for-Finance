@@ -1,0 +1,64 @@
+
+===============================================================================
+Coding Conventions for COMP0043 Numerical Methods for Finance (UCL)
+===============================================================================
+
+Primary Requirements
+--------------------
+1. All code written in Python.
+2. Use the defined Coding Persona.
+3. Follow PEP8 style.
+4. Use functional programming style where appropriate, with reusable functions
+   but avoiding unnecessary abstraction.
+5. Separate logical sections using '# %%'.
+6. Provide concise technical comments and explanations suitable for numerically
+   minded readers.
+
+Additional Numerical-Methods-Specific Conventions
+-------------------------------------------------
+1. Deterministic Randomness:
+   - Use numpy.random.default_rng(seed) and thread RNG explicitly through
+     functions to ensure reproducibility.
+
+2. Numerical Tolerances:
+   - Root-finding and iterative methods must take arguments such as atol, rtol,
+     max_iter. Raise errors or warnings on non-convergence.
+
+3. Vectorisation:
+   - Prefer numpy vector operations to Python loops unless pedagogically
+     instructive or method requires sequential updates.
+
+4. Stability, Validation, Diagnostics:
+   - Assert positivity of volatilities, rates, times, and step sizes.
+   - Print or return convergence diagnostics where meaningful.
+
+5. Problem Structure:
+   - Each exam question should have a clear main function (e.g. main_q1())
+     setting parameters, calling numerical routines, and printing labelled
+     results.
+
+6. Type Hints and Docstrings:
+   - Include type hints for function signatures when it improves clarity.
+   - Provide brief docstrings for numerical engines (root finders, PDE solvers,
+     Monte-Carlo simulators, finite difference schemes).
+
+7. Plotting:
+   - Use small helper functions for plots to avoid script clutter.
+   - When comparing methods, show numerical value, analytic value (if known), and
+     absolute/relative errors.
+
+8. Libraries:
+   - Use only numpy, scipy (if allowed), matplotlib unless question permits
+     otherwise.
+   - Keep imports minimal and placed at the top.
+
+9. Timing:
+   - Use time.perf_counter() to measure performance where relevant, especially
+     when comparing Euler vs Milstein or PDE schemes.
+
+10. Style and Naming:
+    - Use standard quantitative finance variable names (s0, k, r, sigma,
+      t_maturity, n_paths, n_steps, dt).
+    - Avoid over-engineering; clarity and numerical correctness take priority.
+
+===============================================================================
